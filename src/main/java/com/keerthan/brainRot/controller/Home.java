@@ -1,13 +1,15 @@
-package com.keerthan.brainRot;
+package com.keerthan.brainRot.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Hello {
+public class Home {
 
     @RequestMapping("/")
-    public String sayHello() {
-        return "Welcoming All COCKROACHES to BrainRot!";
+    public String greet(){
+        return "Welcoming all cockroaches to BrainRot";
     }
+
+
 }

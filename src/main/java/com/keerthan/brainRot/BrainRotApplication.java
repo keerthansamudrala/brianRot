@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BrainRotApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(BrainRotApplication.class, args);
 	}
 
