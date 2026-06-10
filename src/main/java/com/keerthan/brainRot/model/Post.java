@@ -1,10 +1,14 @@
 package com.keerthan.brainRot.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Component;
 
 @Component
+@Entity
 public class Post {
 
+    @Id
     private int post_id;
     private String post_title;
     private int post_cockroaches;

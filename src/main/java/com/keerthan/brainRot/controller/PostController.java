@@ -29,9 +29,15 @@ public class PostController {
         service.addPost(post);
     }
 
-    //putmapping
+    @PutMapping
+    public void updatePost(@RequestBody Post post){
+        service.updatePost(post);
+    }
 
-    //deletemapping
+    @DeleteMapping
+    public void deletePost(@RequestBody Post post){
+        service.deletePostById(post.getPost_id());
+    }
 
 
 }
