@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class PostController {
 
     @Autowired
@@ -29,12 +30,12 @@ public class PostController {
         service.addPost(post);
     }
 
-    @PutMapping
+    @PutMapping("/posts")
     public void updatePost(@RequestBody Post post){
         service.updatePost(post);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/posts")
     public void deletePost(@RequestBody Post post){
         service.deletePostById(post.getPost_id());
     }
