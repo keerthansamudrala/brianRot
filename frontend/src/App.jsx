@@ -15,8 +15,8 @@ function App() {
         <CockroachCanvas />
 
         {/* Navigation Elements */}
-{/*         <Sidebar /> */}
-{/*         <Navbar /> */}
+        <Sidebar />
+        <Navbar />
 
         {/* Main Content Area */}
         <main className="main-content">
