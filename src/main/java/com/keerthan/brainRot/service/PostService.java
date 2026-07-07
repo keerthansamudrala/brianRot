@@ -17,8 +17,6 @@ public class PostService {
     @Autowired
     PostRepository  postRepository;
 
-
-
     public List<PostResponseDTO> getPosts() {
         List<Post> posts = postRepository.findAll();
 

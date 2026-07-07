@@ -1,8 +1,7 @@
 package com.keerthan.brainRot.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,15 +10,21 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int user_id;
-
+    @Column(nullable = false , unique = true)
     private String user_email;
+    @Column(nullable = false, unique = true)
     private String user_name;
+    @Column(nullable = false)
     private String user_password;
-    private int cockroaches_spent;
-    private int cockroaches_left;
+    @Column(nullable = true)
+    private int total_cockroaches_spent;
+
+    private int cockroaches_left = 100;
 
 }

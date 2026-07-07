@@ -16,35 +16,35 @@ import java.util.List;
 public class PostController {
 
     @Autowired
-    PostService service;
+    PostService postService;
 
     @GetMapping("/posts")
     public ResponseEntity<List<PostResponseDTO>> getPosts(){
-        List<PostResponseDTO> list = service.getPosts();
+        List<PostResponseDTO> list = postService.getPosts();
         return ResponseEntity.ok().body(list);
 
     }
 
     @GetMapping("/posts/{post_id}")
     public Post getPostById(@PathVariable int post_id){
-        return service.getPostById(post_id);
+        return postService.getPostById(post_id);
     }
 
     @PostMapping("/posts")
     public ResponseEntity<Post> addPost(@RequestBody PostRequestDTO dto){
-        Post saved = service.addPost(dto);
+        Post saved = postService.addPost(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/posts/{id}")
     public ResponseEntity<PostResponseDTO> updatePost(@PathVariable int id, @RequestBody PostRequestDTO dto) {
-        PostResponseDTO updated = service.updatePost(id, dto);
+        PostResponseDTO updated = postService.updatePost(id, dto);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/posts/{id}")
     public ResponseEntity<Post> deletePost(@PathVariable int id) {
-        Post deleted = service.deletePostById(id);
+        Post deleted = postService.deletePostById(id);
         return ResponseEntity.ok(deleted);
     }
 
