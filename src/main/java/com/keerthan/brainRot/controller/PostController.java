@@ -1,7 +1,7 @@
 package com.keerthan.brainRot.controller;
 
-import com.keerthan.brainRot.dto.PostRequestDTO;
-import com.keerthan.brainRot.dto.PostResponseDTO;
+import com.keerthan.brainRot.dto.post.PostRequestDTO;
+import com.keerthan.brainRot.dto.post.PostResponseDTO;
 import com.keerthan.brainRot.model.Post;
 import com.keerthan.brainRot.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +47,5 @@ public class PostController {
         Post deleted = postService.deletePostById(id);
         return ResponseEntity.ok(deleted);
     }
-
 
 }

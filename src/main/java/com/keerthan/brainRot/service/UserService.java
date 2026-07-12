@@ -1,7 +1,7 @@
 package com.keerthan.brainRot.service;
 
-import com.keerthan.brainRot.dto.UserRequestDTO;
-import com.keerthan.brainRot.dto.UserResponseDTO;
+import com.keerthan.brainRot.dto.user.UserRequestDTO;
+import com.keerthan.brainRot.dto.user.UserResponseDTO;
 import com.keerthan.brainRot.model.User;
 import com.keerthan.brainRot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,11 @@ public class UserService {
     UserRepository userRepository;
 
     public void addUser(UserRequestDTO dto){
-
         User user = new User();
         user.setUser_name(dto.getUser_name());
         user.setUser_email(dto.getUser_email());
         user.setUser_password(dto.getUser_password());
         userRepository.save(user);
-
     }
 
     public List<UserResponseDTO> getUsers() {

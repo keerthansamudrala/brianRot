@@ -1,8 +1,7 @@
 package com.keerthan.brainRot.controller;
 
-import com.keerthan.brainRot.dto.UserRequestDTO;
-import com.keerthan.brainRot.dto.UserResponseDTO;
-import com.keerthan.brainRot.model.User;
+import com.keerthan.brainRot.dto.user.UserRequestDTO;
+import com.keerthan.brainRot.dto.user.UserResponseDTO;
 import com.keerthan.brainRot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package com.keerthan.brainRot.service;
 
-import com.keerthan.brainRot.dto.PostRequestDTO;
-import com.keerthan.brainRot.dto.PostResponseDTO;
+import com.keerthan.brainRot.dto.post.PostRequestDTO;
+import com.keerthan.brainRot.dto.post.PostResponseDTO;
 import com.keerthan.brainRot.model.Post;
 import com.keerthan.brainRot.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.List;
 public class PostService {
 
     @Autowired
-    PostRepository  postRepository;
+    PostRepository postRepository;
 
     public List<PostResponseDTO> getPosts() {
         List<Post> posts = postRepository.findAll();
@@ -44,7 +44,6 @@ public class PostService {
         post.setUser_id(dto.getUser_id());
 
         return postRepository.save(post);
-
     }
 
     public PostResponseDTO updatePost(int id, PostRequestDTO dto) {
@@ -69,6 +68,5 @@ public class PostService {
         postRepository.deleteById(id);
         return post;
     }
-
 
 }

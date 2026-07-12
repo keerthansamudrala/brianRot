@@ -1,4 +1,4 @@
-package com.keerthan.brainRot.dto;
+package com.keerthan.brainRot.dto.user;
 
 import lombok.Getter;
 import lombok.Setter;
