@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Setter
 @Getter
 @ToString
@@ -24,7 +26,8 @@ public class User {
     private String user_password;
     @Column(nullable = true)
     private int total_cockroaches_spent;
-
     private int cockroaches_left = 100;
+    @Column(nullable = false)
+    private LocalDate lastRefillDate = LocalDate.now();
 
 }

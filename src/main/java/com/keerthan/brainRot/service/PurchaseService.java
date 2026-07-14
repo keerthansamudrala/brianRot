@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class PurchaseService {
 
@@ -40,6 +42,11 @@ public class PurchaseService {
         boolean postExists = postRepository.existsById(postId);
         if (!postExists) {
             return "the post is not available";
+        }
+
+        if (LocalDate.now().isAfter(user.getLastRefillDate())) {
+            user.setCockroaches_left(100);
+            user.setLastRefillDate(LocalDate.now());
         }
 
         boolean alreadyPurchased = purchaseRepository.existsByUserIdAndPostId(userId, postId);

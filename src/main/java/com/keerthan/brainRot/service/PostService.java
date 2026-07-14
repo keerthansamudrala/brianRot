@@ -3,11 +3,15 @@ package com.keerthan.brainRot.service;
 import com.keerthan.brainRot.dto.post.PostRequestDTO;
 import com.keerthan.brainRot.dto.post.PostResponseDTO;
 import com.keerthan.brainRot.model.Post;
+import com.keerthan.brainRot.model.User;
 import com.keerthan.brainRot.repository.PostRepository;
+import com.keerthan.brainRot.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,8 @@ public class PostService {
 
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    UserRepository userRepository;
 
     public List<PostResponseDTO> getPosts() {
         List<Post> posts = postRepository.findAll();
@@ -37,7 +43,26 @@ public class PostService {
         return postRepository.findById(post_id).orElse(null);
     }
 
+    @Transactional
     public Post addPost(PostRequestDTO dto) {
+        User user = userRepository.findById(dto.getUser_id())
+                .orElseThrow(() -> new RuntimeException("User with ID " + dto.getUser_id() + " not found."));
+
+        if (LocalDate.now().isAfter(user.getLastRefillDate())) {
+            user.setCockroaches_left(100);
+            user.setLastRefillDate(LocalDate.now());
+        }
+
+        int postCost = 2;
+        if (user.getCockroaches_left() < postCost) {
+            throw new RuntimeException("You need at least 2 cockroaches to add a post. Current balance: " + user.getCockroaches_left());
+        }
+
+        user.setCockroaches_left(user.getCockroaches_left() - postCost);
+        user.setTotal_cockroaches_spent(user.getTotal_cockroaches_spent() + postCost);
+
+        userRepository.save(user);
+
         Post post = new Post();
         post.setPost_title(dto.getPost_title());
         post.setPost_image(dto.getPost_image());
@@ -47,7 +72,8 @@ public class PostService {
     }
 
     public PostResponseDTO updatePost(int id, PostRequestDTO dto) {
-        Post post = postRepository.findById(id).orElseThrow();
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("no post is available with post_id " + id));
 
         post.setPost_title(dto.getPost_title());
         post.setPost_image(dto.getPost_image());
