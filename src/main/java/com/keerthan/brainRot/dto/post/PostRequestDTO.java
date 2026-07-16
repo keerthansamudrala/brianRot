@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PostRequestDTO {
-    private String post_title;
-    private byte[] post_image;
-    private int user_id;
+    private String postTitle;
+    private byte[] postImage;
+    private int userId;
 }

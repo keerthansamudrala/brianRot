@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 @Setter
 public class PostResponseDTO {
 
-    private int post_id;
-    private String post_title;
-    private byte[] post_image;
-    private LocalDateTime post_datetime;
-    private int post_cockroaches;
+    private int postId;
+    private String postTitle;
+    private byte[] postImage;
+    private LocalDateTime postDatetime;
+    private int postCockroaches;
+    private int userId;
 
 }

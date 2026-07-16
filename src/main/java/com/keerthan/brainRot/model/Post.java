@@ -9,25 +9,25 @@ import java.time.LocalDateTime;
 
 @Setter
 @Getter
-@ToString(exclude = "post_image")
+@ToString(exclude = "postImage")
 @Entity
 @Table(name = "posts")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int post_id;
-
-    private int user_id;
-    private String post_title;
-
+    @Column(name = "post_id")
+    private int postId;
+    @Column(name = "user_id")
+    private int userId;
+    @Column(name = "post_title")
+    private String postTitle;
     @Column(name = "post_image", nullable = true)
-    private byte[] post_image;
-
+    private byte[] postImage;
     @CreationTimestamp
-    private LocalDateTime post_datetime;
-
-    @Column(nullable = false)
-    private int post_cockroaches = 2;
+    @Column(name = "post_datetime")
+    private LocalDateTime postDatetime;
+    @Column(name = "post_cockroaches", nullable = false)
+    private int postCockroaches = 2;
 
 }

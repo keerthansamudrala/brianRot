@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Table(name = "purchases")
 @Entity
 public class Purchase {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "purchase_id")
@@ -26,5 +25,4 @@ public class Purchase {
     @CreationTimestamp
     @Column(name = "purchase_datetime")
     private LocalDateTime purchaseDateTime;
-
 }

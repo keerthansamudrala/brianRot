@@ -1,14 +1,15 @@
 package com.keerthan.brainRot.service;
 
 import com.keerthan.brainRot.dto.purchase.PurchaseRequestDTO;
+import com.keerthan.brainRot.model.Post;
 import com.keerthan.brainRot.model.Purchase;
 import com.keerthan.brainRot.model.User;
 import com.keerthan.brainRot.repository.PostRepository;
 import com.keerthan.brainRot.repository.PurchaseRepository;
 import com.keerthan.brainRot.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 
@@ -35,17 +36,20 @@ public class PurchaseService {
         if (user == null) {
             return "transaction failed due to user not found";
         }
-        if (user.getCockroaches_left() < cost) {
+        if (user.getCockroachesLeft() < cost) {
             return "transaction failed due to low balance";
         }
 
-        boolean postExists = postRepository.existsById(postId);
-        if (!postExists) {
-            return "the post is not available";
+        Post post = postRepository.findById(postId).orElse(null);
+        if (post == null) {
+            return "post is not available";
+        }
+        if(post.getUserId() == userId){
+            return "cannot buy your own post";
         }
 
         if (LocalDate.now().isAfter(user.getLastRefillDate())) {
-            user.setCockroaches_left(100);
+            user.setCockroachesLeft(100);
             user.setLastRefillDate(LocalDate.now());
         }
 
@@ -54,8 +58,10 @@ public class PurchaseService {
             return "post is already bought by you";
         }
 
-        user.setCockroaches_left(user.getCockroaches_left() - cost);
-        user.setTotal_cockroaches_spent(user.getTotal_cockroaches_spent() + cost);
+        user.setCockroachesLeft((user.getCockroachesLeft() - cost));
+        user.setTotalCockroachesSpent((user.getTotalCockroachesSpent() + cost));
+        post.setPostCockroaches(post.getPostCockroaches()+cost);
+        postRepository.save(post);
         userRepository.save(user);
 
         Purchase purchase = new Purchase();

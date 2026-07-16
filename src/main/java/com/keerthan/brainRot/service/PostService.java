@@ -6,10 +6,9 @@ import com.keerthan.brainRot.model.Post;
 import com.keerthan.brainRot.model.User;
 import com.keerthan.brainRot.repository.PostRepository;
 import com.keerthan.brainRot.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,11 +28,12 @@ public class PostService {
         List<PostResponseDTO> response = new ArrayList<>();
         for (Post post : posts) {
             PostResponseDTO dto = new PostResponseDTO();
-            dto.setPost_id(post.getPost_id());
-            dto.setPost_image(post.getPost_image());
-            dto.setPost_datetime(post.getPost_datetime());
-            dto.setPost_cockroaches(post.getPost_cockroaches());
-            dto.setPost_title(post.getPost_title());
+            dto.setPostId((post.getPostId()));
+            dto.setPostImage(post.getPostImage());
+            dto.setPostDatetime(post.getPostDatetime());
+            dto.setPostCockroaches(post.getPostCockroaches());
+            dto.setPostTitle(post.getPostTitle());
+            dto.setUserId(post.getUserId());
             response.add(dto);
         }
         return response;
@@ -45,28 +45,28 @@ public class PostService {
 
     @Transactional
     public Post addPost(PostRequestDTO dto) {
-        User user = userRepository.findById(dto.getUser_id())
-                .orElseThrow(() -> new RuntimeException("User with ID " + dto.getUser_id() + " not found."));
+        User user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User with ID " + dto.getUserId() + " not found."));
 
         if (LocalDate.now().isAfter(user.getLastRefillDate())) {
-            user.setCockroaches_left(100);
+            user.setCockroachesLeft((100));
             user.setLastRefillDate(LocalDate.now());
         }
 
         int postCost = 2;
-        if (user.getCockroaches_left() < postCost) {
-            throw new RuntimeException("You need at least 2 cockroaches to add a post. Current balance: " + user.getCockroaches_left());
+        if (user.getCockroachesLeft() < postCost) {
+            throw new RuntimeException("You need at least 2 cockroaches to add a post. Current balance: " + user.getCockroachesLeft());
         }
 
-        user.setCockroaches_left(user.getCockroaches_left() - postCost);
-        user.setTotal_cockroaches_spent(user.getTotal_cockroaches_spent() + postCost);
+        user.setCockroachesLeft((user.getCockroachesLeft() - postCost));
+        user.setTotalCockroachesSpent((user.getTotalCockroachesSpent() + postCost));
 
         userRepository.save(user);
 
         Post post = new Post();
-        post.setPost_title(dto.getPost_title());
-        post.setPost_image(dto.getPost_image());
-        post.setUser_id(dto.getUser_id());
+        post.setPostTitle((dto.getPostTitle()));
+        post.setPostImage((dto.getPostImage()));
+        post.setUserId((dto.getUserId()));
 
         return postRepository.save(post);
     }
@@ -75,16 +75,16 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("no post is available with post_id " + id));
 
-        post.setPost_title(dto.getPost_title());
-        post.setPost_image(dto.getPost_image());
+        post.setPostTitle((dto.getPostTitle()));
+        post.setPostImage((dto.getPostImage()));
 
         Post saved = postRepository.save(post);
 
         PostResponseDTO response = new PostResponseDTO();
-        response.setPost_title(saved.getPost_title());
-        response.setPost_image(saved.getPost_image());
-        response.setPost_datetime(saved.getPost_datetime());
-        response.setPost_cockroaches(saved.getPost_cockroaches());
+        response.setPostTitle((saved.getPostTitle()));
+        response.setPostImage((saved.getPostImage()));
+        response.setPostDatetime((saved.getPostDatetime()));
+        response.setPostCockroaches((saved.getPostCockroaches()));
 
         return response;
     }

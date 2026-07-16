@@ -7,9 +7,9 @@ import lombok.Setter;
 @Setter
 public class UserResponseDTO {
 
-    private String user_name;
-    private String user_email;
-    private int total_cockroaches_spent;
-    private int cockroaches_left;
+    private String userName;
+    private String userEmail;
+    private int totalCockroachesSpent;
+    private int cockroachesLeft;
 
 }
